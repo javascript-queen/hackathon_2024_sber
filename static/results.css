@@ -1,0 +1,116 @@
+/* Общий стиль страницы */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Центрируем контент */
+}
+
+/* Заголовки */
+h1, h2 {
+    text-align: center;
+    color: #4CAF50;
+    margin-bottom: 20px;
+    width: 90%; /* Ограничиваем ширину заголовков */
+}
+
+/* Ссылки */
+a {
+    display: block;
+    text-align: center;
+    margin: 20px auto;
+    text-decoration: none;
+    font-size: 18px;
+    color: #4CAF50;
+    border: 1px solid #4CAF50;
+    border-radius: 5px;
+    padding: 10px 20px;
+    width: fit-content;
+    transition: 0.3s ease;
+}
+
+a:hover {
+    background-color: #4CAF50;
+    color: white;
+}
+
+/* Контейнер */
+.container {
+    width: 100%;
+    max-width: 1200px; /* Максимальная ширина для больших экранов */
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Изображения (график и таблица) */
+img {
+    display: block;
+    margin: 20px auto;
+    width: 60%; /* Устанавливаем ширину в 60% */
+    max-width: 60%; /* Ограничиваем максимальную ширину */
+    height: 100%;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Таблица оценок */
+img.table {
+    display: block;
+    margin: 20px auto;
+    width: 85%; /* Увеличиваем ширину таблицы */
+    max-width: 85%; /* Ограничиваем максимальную ширину */
+    height: 100%; /* Соотношение сторон остаётся неизменным */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.table-container {
+    width: 90%; /* Растягиваем на всю ширину */
+    max-width: 90%; /* Максимальная ширина контейнера */
+    margin: 20px auto; /* Центрируем по горизонтали */
+    overflow-x: auto; /* Добавляем горизонтальную прокрутку для длинных таблиц */
+    background-color: #ffffff; /* Белый фон для читаемости */
+    border: 1px solid #ddd; /* Легкая граница */
+    border-radius: 8px; /* Скругленные углы */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Легкая тень */
+    padding: 15px; /* Внутренние отступы */
+    text-align: center; /* Выравнивание текста */
+}
+
+/* Таблица внутри контейнера */
+.table-container table.data {
+    width: 80%; /* Таблица растягивается по ширине контейнера */
+    border-collapse: collapse; /* Убираем промежутки между ячейками */
+    font-size: 14px; /* Размер шрифта */
+}
+
+.table-container table.data th,
+.table-container table.data td {
+    border: 1px solid #ddd; /* Легкие границы */
+    padding: 10px; /* Отступы внутри ячеек */
+    text-align: center; /* Центрируем содержимое */
+}
+
+.table-container table.data th {
+    background-color: #4CAF50; /* Зеленый фон для заголовков */
+    color: white; /* Белый текст */
+    font-weight: bold; /* Жирный текст */
+}
+
+.table-container table.data tr:nth-child(even) {
+    background-color: #f2f2f2; /* Светло-серый фон для четных строк */
+}
+
+.table-container table.data tr:hover {
+    background-color: #ddd; /* Серый фон при наведении */
+}

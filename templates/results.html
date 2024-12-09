@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Результаты оценки риска</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='results.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Результаты оценки риска</h1>
+
+        <!-- Таблица с оценками -->
+        <h2>Детализированные оценки риска</h2>
+        <div class="table-container">
+            {{ tables|safe }}
+        </div>
+        
+        <!-- График уровней риска -->
+        <h2>Распределение уровней риска</h2>
+        <img src="{{ url_for('static', filename='risk_distribution.png') }}" class="graph" alt="График распределения уровней риска">
+
+        <!-- Ссылка на главную -->
+        <a href="/">Вернуться на главную</a>
+    </div>
+</body>
+</html>

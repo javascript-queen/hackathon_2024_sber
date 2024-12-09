@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Оценка риска</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Оценка риска релиза</h1>
+
+        <h2>Ручной ввод данных</h2>
+        <form action="/manual" method="post">
+            <label>Важность бизнес-процессов (1-5):</label>
+            <input type="number" name="business_importance" min="1" max="5" required>
+
+            <label>Техническая сложность (1-5):</label>
+            <input type="number" name="technical_complexity" min="1" max="5" required>
+
+            <label>Срочность (1-5):</label>
+            <input type="number" name="urgency" min="1" max="5" required>
+
+            <label>Качество данных (1-5):</label>
+            <input type="number" name="data_quality" min="1" max="5" required>
+
+            <label>Опыт команды (1-5):</label>
+            <input type="number" name="team_experience" min="1" max="5" required>
+
+            <label>Соответствие нормативным требованиям (1-5):</label>
+            <input type="number" name="regulatory_compliance" min="1" max="5" required>
+
+            <label>Юридические последствия (1-5):</label>
+            <input type="number" name="legal_impact" min="1" max="5" required>
+
+            <label>Финансовые риски (1-5):</label>
+            <input type="number" name="financial_risk" min="1" max="5" required>
+
+            <label>Уровень интеграции (1-5):</label>
+            <input type="number" name="integration_level" min="1" max="5" required>
+
+            <label>Стабильность предыдущих релизов (1-5):</label>
+            <input type="number" name="stability_of_previous_releases" min="1" max="5" required>
+
+            <label>Зрелость тестирования (1-5):</label>
+            <input type="number" name="testing_maturity" min="1" max="5" required>
+
+            <label>Наличие плана резервного копирования (1-5):</label>
+            <input type="number" name="backup_plan" min="1" max="5" required>
+
+            <button type="submit">Оценить риск</button>
+        </form>
+
+        <h2>Загрузка файла</h2>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" required>
+            <button type="submit">Загрузить</button>
+        </form>
+    </div>
+</body>
+</html>
