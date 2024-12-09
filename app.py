@@ -1,15 +1,22 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, Response
 import pandas as pd
-from risk_assessment import evaluate_risk, classify_risk, visualize_risks, visualize_table
+import io
+from risk_assessment import evaluate_risk, classify_risk, visualize_risks
+
 
 app = Flask(__name__)
+
+# Глобальная переменная для хранения загруженных данных
+global_data = None
 
 @app.route("/")
 def index():
     return render_template("index.html")
 
+
 @app.route("/upload", methods=["POST"])
 def upload():
+    global global_data
     if 'file' not in request.files:
         return "Файл не найден"
     file = request.files['file']
@@ -25,10 +32,9 @@ def upload():
         # Расчёт оценок
         data['Risk Score'] = data.apply(evaluate_risk, axis=1)
         data['Risk Level'] = data.apply(lambda row: classify_risk(row['Risk Score'], row), axis=1)
-        
-        # Визуализация данных
-        visualize_risks(data)
-        visualize_table(data)
+
+        # Сохранение данных в глобальную переменную
+        global_data = data
 
         # Преобразуем таблицу в HTML
         table_html = data.to_html(classes='data', index=False).strip()
@@ -36,13 +42,26 @@ def upload():
         # Передаём данные в шаблон
         return render_template(
             "results.html",
-            tables=table_html  # Убираем лишние квадратные скобки
+            tables=table_html
         )
     except Exception as e:
         return f"Произошла ошибка при обработке файла: {e}"
 
+
+@app.route("/plot.png")
+def plot_png():
+    """Маршрут для динамической генерации графика."""
+    if global_data is None:
+        return "Данные не найдены. Пожалуйста, загрузите файл."
+    
+    # Визуализация графика
+    buffer = visualize_risks(global_data)
+    return Response(buffer, mimetype='image/png')
+
+
 @app.route("/manual", methods=["POST"])
 def manual():
+    global global_data
     try:
         # Получаем данные из формы
         form_data = {
@@ -67,19 +86,19 @@ def manual():
         data['Risk Score'] = data.apply(evaluate_risk, axis=1)
         data['Risk Level'] = data.apply(lambda row: classify_risk(row['Risk Score'], row), axis=1)
 
-        # Визуализация графика и таблицы
-        visualize_risks(data)
-        visualize_table(data)
+        # Сохраняем данные для дальнейшего использования
+        global_data = data
 
         # Преобразуем таблицу в HTML
         table_html = data.to_html(classes='data', index=False).strip()
 
         return render_template(
             "results.html",
-            tables=table_html  # Убираем квадратные скобки
+            tables=table_html
         )
     except Exception as e:
         return f"Произошла ошибка при обработке данных: {e}"
+
 
 if __name__ == "__main__":
     app.run(debug=True)

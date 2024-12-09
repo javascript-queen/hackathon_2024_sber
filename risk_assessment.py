@@ -2,6 +2,8 @@ import pandas as pd
 import matplotlib
 matplotlib.use('Agg')  # Устанавливаем безголовый бэкэнд
 import matplotlib.pyplot as plt
+import io
+from flask import Response
 
 
 # Весовые коэффициенты для критериев
@@ -58,27 +60,32 @@ def visualize_risks(data):
     """
     Создаёт график распределения уровней риска.
     """
+    # Подготовка данных для графика
     risk_counts = data['Risk Level'].value_counts()
 
     # Создание графика
     plt.figure(figsize=(10, 6))
-    bars = plt.bar(risk_counts.index, risk_counts.values, color=['#4CAF50', '#FFC107', '#FF5722', '#F44336', '#9C27B0'])
+    bars = plt.bar(risk_counts.index, risk_counts.values, color='#4CAF50')
 
     # Настройка осей
     plt.title('Распределение уровней риска', fontsize=16)
     plt.xlabel('Уровень риска', fontsize=14)
     plt.ylabel('Количество', fontsize=14)
-    plt.xticks(rotation=0, fontsize=12)  # Наклон подписей
+    plt.xticks(fontsize=12)
     plt.yticks(fontsize=12)
 
-    # Добавление значений на столбцы
+    # Добавление значений на вершины столбцов
     for bar in bars:
         height = bar.get_height()
         plt.text(bar.get_x() + bar.get_width() / 2, height, str(height), ha='center', va='bottom', fontsize=12)
 
-    # Сохранение графика
-    plt.savefig("static/risk_distribution.png", bbox_inches='tight')
+    # Сохранение графика в буфер
+    buffer = io.BytesIO()
+    plt.savefig(buffer, format='png')
+    buffer.seek(0)
     plt.close()
+    
+    return buffer
 
 def visualize_table(data):
     """
